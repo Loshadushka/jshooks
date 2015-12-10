@@ -3,7 +3,7 @@ function init(settings) {
     testing_googlePageId = settings.pageId;
     testing_googleSpreadsheetToken = settings.token;
     testing_login = settings.login;
-    testing_password = setting.password;
+    testing_password = settings.password;
     /*ACCESS START DATE AND END DATE. YOU CAN CHANGE IT BUT FORMAT SHOULD BE YYYY-MM-DD*/
     date_begin = settings.date_begin;
     date_end = settings.date_end;

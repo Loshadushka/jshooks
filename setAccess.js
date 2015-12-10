@@ -2,6 +2,8 @@
 function init(settings) {
     testing_googlePageId = settings.pageId;
     testing_googleSpreadsheetToken = settings.token;
+    testing_login = settings.login;
+    testing_password = setting.password;
     /*ACCESS START DATE AND END DATE. YOU CAN CHANGE IT BUT FORMAT SHOULD BE YYYY-MM-DD*/
     date_begin = settings.date_begin;
     date_end = settings.date_end;
@@ -20,7 +22,7 @@ function doAfterEmailIsReceived(email) {
     var oReq = new XMLHttpRequest();
 
     oReq.onload = reqListener;
-    oReq.open("get", address + "filter.jsp?new_constraint=HandleService%3A%3Aemail&filter_type=any&HandleService%3A%3Aemail%3A%3Aoption=starts+with&HandleService%3A%3Aemail%3A%3Avalue=" + email + "&source_type=EBP&task=Quick+Search", true);
+    oReq.open("get", address + "filter.jsp?new_constraint=HandleService%3A%3Aemail&filter_type=any&HandleService%3A%3Aemail%3A%3Aoption=starts+with&HandleService%3A%3Aemail%3A%3Avalue=" + email + "&source_type=EBP&task=Quick+Search", true, testing_login, testing_password);
     oReq.setRequestHeader("Content-Type", "text/html; charset=ISO-8859-1");
     oReq.send();
 }
@@ -53,7 +55,7 @@ function setAccess(EBPnumber, id) {
 
 
     };
-    xmlHttpRequest.open("POST", address + "edit_user.jsp", true);
+    xmlHttpRequest.open("POST", address + "edit_user.jsp", true, testing_login, testing_password);
     xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmlHttpRequest.send("view=accesscontrolpv5&letter=D&ebp_handle=" + EBPnumber + "&accessGroupIDs=" + id + "&accessGroupIDInstructor=-1&date_begin=" + date_begin + "&date_end=" + date_end + "&task=Add+Access");
     testing_action_pointer++;

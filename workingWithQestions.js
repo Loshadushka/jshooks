@@ -1,4 +1,3 @@
-testing_workingWithQuestion(question);
 function testing_workingWithQuestion(question) {
 
     if (question.kind == "tbsDocumentReview") {

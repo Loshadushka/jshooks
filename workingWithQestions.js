@@ -1,4 +1,4 @@
-function testing_workingWithQuestion(question) {
+
 
     if (question.kind == "tbsDocumentReview") {
         if (document.querySelector(".identifier").innerHTML.replace("(", "").replace(")", "") == question.identifier) {
@@ -140,4 +140,3 @@ function testing_workingWithQuestion(question) {
     }
 
 
-}

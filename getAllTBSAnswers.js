@@ -39,7 +39,6 @@ function testing_printTBSQuestionInfo(structure) {
                     var start_value = 1;
                     var question = this.question;
                     item.querySelectorAll("select").forEach(function (item, index, array) {
-                        debugger;
                         var last_value = start_value + item.querySelectorAll("option").length - 1;
                         if (!testing_isBetween(start_value, last_value, this.correctAnswers[index])) {
                             console.log("%cguid: " + this.guid + " identifier: " + this.identifier + " has incorrect value " + this.correctAnswers[index] + " which should be between " + start_value + " and " + last_value, "color:red;");
@@ -88,7 +87,6 @@ pv5.activeApp.courseContent.children.forEach(function (item) {
             if (item2.hasOwnProperty("parts")) {
                 item2.parts[3].questions.forEach(
                     function (question) {
-                        debugger;
                         var structure = {question: question, title: item2.title};
                         testing_printTBSQuestionInfo(structure);
                     }

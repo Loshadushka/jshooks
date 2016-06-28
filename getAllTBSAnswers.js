@@ -9,7 +9,7 @@ function testing_printTBSQuestionInfo(structure) {
 
 
     var oReq = new XMLHttpRequest();
-    address = "http://qa.efficientlearning.com/pv5/v8/2/app/cpaexcel/res/html/" + structure.question.guid + ".html";
+    var address = "http://qa.efficientlearning.com/pv5/v8/2/app/cpaexcel/res/html/" + structure.question.guid + ".html";
     oReq.onload = function () {
         testing_reqListener(event, structure)
     };

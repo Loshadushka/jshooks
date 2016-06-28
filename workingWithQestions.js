@@ -8,15 +8,15 @@
             testing_pressButtonInARow = setTimeout(function () {
                 var answer = question.correctAnswers[testing_questionPointer] - testing_wholeProcessedAnswersCount - 1;
                 setTimeout(function (i) {
-                    document.querySelectorAll("span.answer_choice")[i].click();
+                    document.querySelectorAll("div.assessment_question:not([style='display: none;']) span.answer_choice")[i].click();
                 }, 100, testing_questionPointer);
                 setTimeout(function (i, answer) {
-                    document.querySelectorAll("div.answer_box")[i].querySelectorAll("label")[answer].click();
+                    document.querySelectorAll("div.assessment_question:not([style='display: none;']) div.answer_box")[i].querySelectorAll("label")[answer].click();
                 }, 200, testing_questionPointer, answer);
                 setTimeout(function (i) {
-                    document.querySelectorAll("div.button_box")[i].querySelector("button.accept_button").click();
+                    document.querySelectorAll("div.assessment_question:not([style='display: none;']) div.button_box")[i].querySelector("button.accept_button").click();
                 }, 300, testing_questionPointer);
-                testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll("div.answer_box")[testing_questionPointer].querySelectorAll("label").length;
+                testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll("div.assessment_question:not([style='display: none;']) div.answer_box")[testing_questionPointer].querySelectorAll("label").length;
                 testing_questionPointer++;
                 testing_pressButtonInARow = setTimeout(arguments.callee, testing_delay);
                 if (testing_questionPointer == question.correctAnswers.length) {

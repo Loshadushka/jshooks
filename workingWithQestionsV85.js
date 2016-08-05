@@ -127,8 +127,8 @@ function testing_workingWithQuestion(question) {
                 document.querySelectorAll("div.assessment_question:not([style='display: none;']) .answer_box").forEach(function (item, index) {
                     $(item).dblclick();
                     var answer = question.correctAnswers[index] - testing_wholeProcessedAnswersCount;
-                    testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll(".pv5_lightbox_wrapper li").length;
-                    document.querySelectorAll(".pv5_lightbox_wrapper li")[answer - 1].click();
+                    testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll(".infosheet_selector li").length;
+                    document.querySelectorAll(".infosheet_selector li a")[answer - 1].click();
 
 
                 })

@@ -1,6 +1,6 @@
 function testing_workingWithQuestion(question) {
     if (question.kind == "tbsDocumentReview") {
-        if (document.querySelector(".identifier").innerHTML.replace("(", "").replace(")", "") == question.identifier) {
+        if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
             testing_wholeProcessedAnswersCount = 0;
             testing_delay = 500;
             testing_questionPointer = 0;

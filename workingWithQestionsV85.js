@@ -66,7 +66,7 @@ function testing_workingWithQuestion(question) {
                     $(item).dblclick();
                     var answer = question.correctAnswers[index] - testing_wholeProcessedAnswersCount - 1;
                     testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll(".infosheet_selector li").length;
-                    document.querySelectorAll(".infosheet_selector li")[answer].click();
+                    document.querySelectorAll(".infosheet_selector li a")[answer].click();
 
 
                 })

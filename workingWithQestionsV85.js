@@ -1,4 +1,3 @@
-debugger;
 function testing_workingWithQuestion(question) {
     if (question.kind == "tbsDocumentReview") {
         if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {

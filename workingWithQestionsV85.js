@@ -32,22 +32,22 @@ function testing_workingWithQuestion(question) {
     if (question.kind == "tbsResearch") {
         if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
 
-            if (document.querySelectorAll("div.assessment_question:not([style='display: none;']) input").length == 4) {
+            if (document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([disabled])").length == 4) {
 
 
-                document.querySelectorAll("div.assessment_question:not([style='display: none;']) input").forEach(function (item, index) {
+                document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([disabled])").forEach(function (item, index) {
 
                     item.value = question.correctAnswers[0][index];
-                    $(".assessment_question[data-guid='" + question.guid + "'] input").eq(index).keyup();
+                    $(".assessment_question[data-guid='" + question.guid + "'] input:not([disabled])").eq(index).keyup();
                 })
 
 
             }
             else {
-                document.querySelector(".assessment_question[data-guid='" + question.guid + "'] select").value = question.correctAnswers[0][0];
-                document.querySelectorAll(".assessment_question[data-guid='" + question.guid + "'] input")[0].value = question.correctAnswers[0][1];
-                document.querySelectorAll(".assessment_question[data-guid='" + question.guid + "'] input")[1].value = question.correctAnswers[0][2];
-                $(".assessment_question[data-guid='" + question.guid + "'] input").eq(0).keyup();
+                document.querySelector(".assessment_question[data-guid='" + question.guid + "'] select:not([disabled])").value = question.correctAnswers[0][0];
+                document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([disabled])")[0].value = question.correctAnswers[0][1];
+                document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([disabled])")[1].value = question.correctAnswers[0][2];
+                $(".assessment_question[data-guid='" + question.guid + "'] input:not([disabled])").eq(0).keyup();
             }
         }
 

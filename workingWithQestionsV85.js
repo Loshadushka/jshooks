@@ -38,7 +38,7 @@ function testing_workingWithQuestion(question) {
                 document.querySelectorAll("div.assessment_question:not([style='display: none;']) input").forEach(function (item, index) {
 
                     item.value = question.correctAnswers[0][index];
-                    $(".assessment_question[data-guid='" + question.guid + "'] input").eq(index).change();
+                    $(".assessment_question[data-guid='" + question.guid + "'] input").eq(index).keyup();
                 })
 
 
@@ -47,7 +47,7 @@ function testing_workingWithQuestion(question) {
                 document.querySelector(".assessment_question[data-guid='" + question.guid + "'] select").value = question.correctAnswers[0][0];
                 document.querySelectorAll(".assessment_question[data-guid='" + question.guid + "'] input")[0].value = question.correctAnswers[0][1];
                 document.querySelectorAll(".assessment_question[data-guid='" + question.guid + "'] input")[1].value = question.correctAnswers[0][2];
-                $(".assessment_question[data-guid='" + question.guid + "'] input").eq(0).change();
+                $(".assessment_question[data-guid='" + question.guid + "'] input").eq(0).keyup();
             }
         }
 

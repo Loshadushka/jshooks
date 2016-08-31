@@ -104,7 +104,7 @@ function testing_workingWithQuestion(question) {
     }
 
 
-    if (question.kind == "tbsGeneral" && question["sub-kind"] == "spreadsheet") {
+    if (question.kind == "tbsGeneral" && question["sub-kind"] == "spreadsheetStatement") {
 
         if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
 

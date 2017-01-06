@@ -67,6 +67,7 @@ function testing_workingWithQuestion(question) {
                     var answer = question.correctAnswers[index] - testing_wholeProcessedAnswersCount - 1;
                     testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll(".infosheet_selector li").length;
                     document.querySelectorAll(".infosheet_selector li a")[answer].click();
+                    document.querySelector("button.ok-button").click();
 
 
                 })
@@ -129,6 +130,7 @@ function testing_workingWithQuestion(question) {
                     var answer = question.correctAnswers[index] - testing_wholeProcessedAnswersCount;
                     testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll(".infosheet_selector li").length;
                     document.querySelectorAll(".infosheet_selector li a")[answer - 1].click();
+                    document.querySelector("button.ok-button").click();
 
 
                 })

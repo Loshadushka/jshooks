@@ -22,7 +22,7 @@ function doAfterEmailIsReceived(email) {
 }
 
 
-function afterEmailCreation()
+function afterEmailCreation(email)
 {
     var oReq = new XMLHttpRequest();
     oReq.onload = reqListener;

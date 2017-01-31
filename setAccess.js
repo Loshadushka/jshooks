@@ -16,9 +16,9 @@ function init(settings) {
 }
 
 function doAfterEmailIsReceived(email) {
-
     email = email.replace("+", "%2B");
     email = email.replace("@", "%40");
+    createNewUser(email, "Anykey","Thompson");
     var oReq = new XMLHttpRequest();
 
     oReq.onload = reqListener;
@@ -44,6 +44,21 @@ function reqListener() {
 
 
 }
+
+
+function createNewUser(email, name, lastName){
+
+
+var oReq = new XMLHttpRequest();
+ 
+    var body = "first_name="+name+"&last_name="+lastName+"&email="+email+"&task=Add";
+    oReq.open("post", address+"import_add.jsp", true, testing_login, testing_password);
+    oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded", "charset=ISO-8859-1");
+    oReq.send(body);
+
+
+}
+
 
 
 function setAccess(EBPnumber, id) {

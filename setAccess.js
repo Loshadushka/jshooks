@@ -22,11 +22,11 @@ function doAfterEmailIsReceived(email) {
 }
 
 
-function afterEmailCreation()
+function afterEmailCreation(xhr, email)
 {
     var oReq = new XMLHttpRequest();
     oReq.onload = reqListener;
-    oReq.open("get", address + "filter.jsp?new_constraint=HandleService%3A%3Aemail&filter_type=any&HandleService%3A%3Aemail%3A%3Aoption=starts+with&HandleService%3A%3Aemail%3A%3Avalue=" + this + "&source_type=EBP&task=Quick+Search", true, testing_login, testing_password);
+    oReq.open("get", address + "filter.jsp?new_constraint=HandleService%3A%3Aemail&filter_type=any&HandleService%3A%3Aemail%3A%3Aoption=starts+with&HandleService%3A%3Aemail%3A%3Avalue=" + email + "&source_type=EBP&task=Quick+Search", true, testing_login, testing_password);
     oReq.setRequestHeader("Content-Type", "text/html; charset=ISO-8859-1");
     oReq.send();
 }
@@ -53,7 +53,7 @@ function reqListener() {
 function createNewUser(email, name, lastName){
 
 var oReq = new XMLHttpRequest();
-    oReq.onload = afterEmailCreation.apply(email);
+    oReq.onload = function(event){ afterEmailCreation(event, email) };
     var body = "first_name="+name+"&last_name="+lastName+"&email="+email+"&task=Add";
     oReq.open("post", address+"import_add.jsp", true, testing_login, testing_password);
     oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded", "charset=ISO-8859-1");

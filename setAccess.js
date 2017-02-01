@@ -18,9 +18,9 @@ function init(settings) {
 
 function doAfterEmailIsReceived(email) {
     email = createNewEmailBasedOnThePrevious(email);
+    writeNewAccountToGoogle(email)
     email = email.replace("+", "%2B");
     email = email.replace("@", "%40");
-    writeNewAccountToGoogle(email)
     createNewUser(email, "Anykey","Thompson");
 }
 
@@ -86,7 +86,7 @@ function writeNewAccountToGoogle(email)
 
 var testing_sheetName = googleWriteData.sheetName;
 var testing_lastEmail = email;
-var testing_product = "TBS";
+var testing_product = "TBD";
 var testing_googleWriteScriptURL = "https://script.google.com/macros/s/AKfycbyu8nDI8jGl3Y0C1RWEsXI3r_HcSZeJSye7nTjxDYUbefspfcS_/exec";
 var testing_str = 'sheetname=' + testing_sheetName + '&Email=' + encodeURIComponent(testing_lastEmail) + '&Product=' + testing_product;
 

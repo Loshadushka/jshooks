@@ -35,18 +35,7 @@ function reqListener() {
     var expr = /\d{6}/;
     var EBPnumber = expr.exec(this.responseText);
     console.log(EBPnumber[0]);
-
-
-    testing_pressButtonInARow = setTimeout(function () {
-        setAccess(EBPnumber[0], accessGroupID[testing_action_pointer]);
-        testing_pressButtonInARow = setTimeout(arguments.callee, delay);
-        if (testing_action_pointer == accessGroupID.length) {
-            clearTimeout(testing_pressButtonInARow);
-
-        }
-    }, delay)
-
-
+     setAccess(EBPnumber[0], accessGroupID);
 }
 
 
@@ -64,18 +53,20 @@ var oReq = new XMLHttpRequest();
 
 
 
-function setAccess(EBPnumber, id) {
+function setAccess(EBPnumber, ids) {
     var xmlHttpRequest = new XMLHttpRequest();
     xmlHttpRequest.onreadystatechange = function () {
         if (xmlHttpRequest.readyState == 4) {
-            console.log(id + " has been included");
+            console.log(ids.toString() + " have been included");
         }
 
 
     };
+    var accessGroupString = "";
+    ids.forEach(id => {accessGroupString = accessGroupString+"&accessGroupIDs="+id });
     xmlHttpRequest.open("POST", address + "edit_user.jsp", true, testing_login, testing_password);
     xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xmlHttpRequest.send("view=accesscontrolpv5&letter=D&ebp_handle=" + EBPnumber + "&accessGroupIDs=" + id + "&accessGroupIDInstructor=-1&date_begin=" + date_begin + "&date_end=" + date_end + "&task=Add+Access");
+    xmlHttpRequest.send("view=accesscontrolpv5&letter=D&ebp_handle=" + EBPnumber + accessGroupString + "&accessGroupIDInstructor=-1&date_begin=" + date_begin + "&date_end=" + date_end + "&task=Add+Access");
     testing_action_pointer++;
 }
 

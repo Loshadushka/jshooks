@@ -12,12 +12,15 @@ function init(settings) {
     testing_action_pointer = 0;
     accessGroupID = settings.accessGroupID;
     delay = settings.delay;
+    googleWriteData = settings.googleWriteData;
    settings.email == null ? testing_getLastEmail() : doAfterEmailIsReceived(settings.email);
 }
 
 function doAfterEmailIsReceived(email) {
+    email = createNewEmailBasedOnThePrevious(email);
     email = email.replace("+", "%2B");
     email = email.replace("@", "%40");
+    writeNewAccountToGoogle(email)
     createNewUser(email, "Anykey","Thompson");
 }
 
@@ -58,6 +61,13 @@ function setAccess(EBPnumber, ids) {
     xmlHttpRequest.onreadystatechange = function () {
         if (xmlHttpRequest.readyState == 4) {
             console.log(ids.toString() + " have been included");
+            
+            
+            
+            
+            
+            
+            
         }
 
 
@@ -68,6 +78,30 @@ function setAccess(EBPnumber, ids) {
     xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmlHttpRequest.send("view=accesscontrolpv5&letter=D&ebp_handle=" + EBPnumber + accessGroupString + "&accessGroupIDInstructor=-1&date_begin=" + date_begin + "&date_end=" + date_end + "&task=Add+Access");
     testing_action_pointer++;
+}
+
+
+function writeNewAccountToGoogle(email)
+{
+
+var testing_sheetName = googleWriteData.sheetName;
+var testing_lastEmail = email;
+var testing_product = "TBS";
+var testing_googleWriteScriptURL = "https://script.google.com/macros/s/AKfycbyu8nDI8jGl3Y0C1RWEsXI3r_HcSZeJSye7nTjxDYUbefspfcS_/exec";
+var testing_str = 'sheetname=' + testing_sheetName + '&Email=' + encodeURIComponent(testing_lastEmail) + '&Product=' + testing_product;
+
+
+    $.ajax({
+        url: googleWriteData.googleWriteScriptURL,
+        data: testing_str,
+        type: "POST"
+    }).done(function () {
+        console.log("Account has been added to googlesheet");
+    });
+
+
+    
+    
 }
 
 
@@ -82,4 +116,17 @@ function testing_getLastEmail() {
             doAfterEmailIsReceived(email);
         });
 
+}
+
+
+function createNewEmailBasedOnThePrevious(lastEmail)
+{
+    var emailParts = lastEmail.split("+");
+    var baseEmail = emailParts[0];
+    var emailAlias = emailParts[1]; 
+    var regex = /(\d+)/g;
+    var lastEmailNumber = emailAlias.match(regex);
+    var slicedEmail = emailAlias.split(lastEmailNumber);
+    lastEmail = baseEmail+"+"+slicedEmail[0] + (Number(lastEmailNumber) + 1) + slicedEmail[1];
+return lastEmail;
 }

@@ -99,7 +99,7 @@ function getAddedProductsFromEBP(event, EBPnumber, email){
 
 function writeNewAccountToGoogle(email, products, guid)
 {
-
+    console.log(guid);
     var testing_sheetName = googleWriteData.sheetName;
     var testing_lastEmail = email;
     var testing_product = products;
@@ -112,7 +112,7 @@ function writeNewAccountToGoogle(email, products, guid)
         data: testing_str,
         type: "POST"
     }).done(function () {
-        console.log("Account has been added to googlesheet");
+        console.log("Account"+ email +" has been added to googlesheet");
     });
 
 }

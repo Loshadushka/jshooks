@@ -94,7 +94,7 @@ testing_action_pointer++;
 
 function getAddedProductsFromEBP(event, EBPnumber, email){
 
-    var arr = Array.from($.parseHTML(this.responseText)[12].querySelectorAll("table tr td:nth-child(2)"));
+    var arr = Array.from($.parseHTML(event.target.responseText)[12].querySelectorAll("table tr td:nth-child(2)"));
     var products="|";
     arr.splice(0,2);
     arr.splice(arr.length-9,9);

@@ -49,10 +49,7 @@ function createNewUser(email, name, lastName){
     oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded", "charset=ISO-8859-1");
     oReq.send(body);
 
-
 }
-
-
 
 function setAccess(EBPnumber, ids) {
     var xmlHttpRequest = new XMLHttpRequest();
@@ -64,18 +61,11 @@ function setAccess(EBPnumber, ids) {
             console.log(ids.toString() + " have been included");
             var oReq = new XMLHttpRequest();
             oReq.onload = function(event){
-                getAddedProductsFromEBP(event, EBPnumber, email);
+            getAddedProductsFromEBP(event, EBPnumber, email);
 }
             oReq.open("get", address + "edit_user.jsp?view=accesscontrolpv5&ebp_handle=" + EBPnumber, true, testing_login, testing_password);
             oReq.setRequestHeader("Content-Type", "text/html; charset=ISO-8859-1");
             oReq.send();
-
-
-
-
-
-
-
 
 
     }
@@ -96,24 +86,13 @@ function getAddedProductsFromEBP(event, EBPnumber, email){
     var expr = /[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i;
     var htmlText = $.parseHTML(event.target.responseText)[12];
     var arr = Array.from(htmlText.querySelectorAll("table tr td:nth-child(2)"));
-    htmlText =  expr.exec(htmlText);
+    htmlText =  expr.exec(htmlText.innerHTML);
     var products="|";
     arr.splice(0,2);
     arr.splice(arr.length-9,9);
     arr.forEach(item => { products = products + item.textContent+"|"});
     writeNewAccountToGoogle(email, products, htmlText[0]);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -135,15 +114,10 @@ function writeNewAccountToGoogle(email, products, guid)
         console.log("Account has been added to googlesheet");
     });
 
-
-
-
 }
 
 
 function testing_getLastEmail() {
-
-
     $.getJSON('https://spreadsheets.google.com/feeds/list/'
         + testing_googleSpreadsheetToken + '/' + testing_googlePageId + '/public/values?alt=json'
         , function (data) {
@@ -151,7 +125,6 @@ function testing_getLastEmail() {
             email = data.feed.entry[len - 1].gsx$email.$t;
             doAfterEmailIsReceived(email);
         });
-
 }
 
 

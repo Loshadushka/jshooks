@@ -63,7 +63,9 @@ function setAccess(EBPnumber, ids) {
         if (xmlHttpRequest.readyState == 4) {
             console.log(ids.toString() + " have been included");
             var oReq = new XMLHttpRequest();
-            oReq.onload = getAddedProductsFromEBP(event, EBPnumber, email);
+            oReq.onload = function(event){
+                getAddedProductsFromEBP(event, EBPnumber, email);
+}
             oReq.open("get", address + "edit_user.jsp?view=accesscontrolpv5&ebp_handle=" + EBPnumber, true, testing_login, testing_password);
             oReq.setRequestHeader("Content-Type", "text/html; charset=ISO-8859-1");
             oReq.send();

@@ -17,9 +17,9 @@ function init(settings) {
 
 function doAfterEmailIsReceived(email) {
     debugger;
-    email = createNewEmailBasedOnThePrevious(email);
+    emailChangeed = createNewEmailBasedOnThePrevious(email);
 
-    createNewUser(email.replace("+", "%2B").replace("@", "%40"), "Anykey","Thompson");
+    createNewUser(emailChangeed.replace("+", "%2B").replace("@", "%40"), "Anykey","Thompson");
 
 }
 
@@ -62,7 +62,7 @@ function setAccess(EBPnumber, ids) {
             console.log(ids.toString() + " have been included");
             var oReq = new XMLHttpRequest();
             oReq.onload = function(event){
-            getAddedProductsFromEBP(event, EBPnumber, email);
+            getAddedProductsFromEBP(event, EBPnumber, emailChangeed);
 }
             oReq.open("get", address + "edit_user.jsp?view=accesscontrolpv5&ebp_handle=" + EBPnumber, true, testing_login, testing_password);
             oReq.setRequestHeader("Content-Type", "text/html; charset=ISO-8859-1");

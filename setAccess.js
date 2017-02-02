@@ -93,13 +93,15 @@ testing_action_pointer++;
 
 
 function getAddedProductsFromEBP(event, EBPnumber, email){
-
-    var arr = Array.from($.parseHTML(event.target.responseText)[12].querySelectorAll("table tr td:nth-child(2)"));
+    var expr = /[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i;
+    var htmlText = $.parseHTML(event.target.responseText)[12];
+    var arr = Array.from(htmlText.querySelectorAll("table tr td:nth-child(2)"));
+    htmlText =  expr.exec(htmlText);
     var products="|";
     arr.splice(0,2);
     arr.splice(arr.length-9,9);
     arr.forEach(item => { products = products + item.textContent+"|"});
-    writeNewAccountToGoogle(email, products);
+    writeNewAccountToGoogle(email, products, htmlText[0]);
 }
 
 
@@ -115,14 +117,14 @@ function getAddedProductsFromEBP(event, EBPnumber, email){
 
 
 
-function writeNewAccountToGoogle(email, products)
+function writeNewAccountToGoogle(email, products, guid)
 {
 
     var testing_sheetName = googleWriteData.sheetName;
     var testing_lastEmail = email;
     var testing_product = products;
     var testing_googleWriteScriptURL = "https://script.google.com/macros/s/AKfycbyu8nDI8jGl3Y0C1RWEsXI3r_HcSZeJSye7nTjxDYUbefspfcS_/exec";
-    var testing_str = 'sheetname=' + testing_sheetName + '&Email=' + encodeURIComponent(testing_lastEmail) + '&Product=' + testing_product;
+    var testing_str = 'sheetname=' + testing_sheetName + '&Email=' + encodeURIComponent(testing_lastEmail) + '&Product=' + testing_product +'&Guid=' + guid;
 
 
     $.ajax({

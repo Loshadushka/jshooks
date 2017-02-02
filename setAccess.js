@@ -1,4 +1,3 @@
-
 function init(settings) {
     testing_googlePageId = settings.pageId;
     testing_googleSpreadsheetToken = settings.token;
@@ -13,15 +12,14 @@ function init(settings) {
     accessGroupID = settings.accessGroupID;
     delay = settings.delay;
     googleWriteData = settings.googleWriteData;
-   settings.email == null ? testing_getLastEmail() : doAfterEmailIsReceived(settings.email);
+    settings.email == null ? testing_getLastEmail() : doAfterEmailIsReceived(settings.email);
 }
 
 function doAfterEmailIsReceived(email) {
     email = createNewEmailBasedOnThePrevious(email);
-    writeNewAccountToGoogle(email)
-    email = email.replace("+", "%2B");
-    email = email.replace("@", "%40");
-    createNewUser(email, "Anykey","Thompson");
+
+    createNewUser(email.replace("+", "%2B").replace("@", "%40"), "Anykey","Thompson");
+
 }
 
 
@@ -38,13 +36,13 @@ function reqListener() {
     var expr = /\d{6}/;
     var EBPnumber = expr.exec(this.responseText);
     console.log(EBPnumber[0]);
-     setAccess(EBPnumber[0], accessGroupID);
+    setAccess(EBPnumber[0], accessGroupID);
 }
 
 
 function createNewUser(email, name, lastName){
 
-var oReq = new XMLHttpRequest();
+    var oReq = new XMLHttpRequest();
     oReq.onload = function(event){ afterEmailCreation(event, email) };
     var body = "first_name="+name+"&last_name="+lastName+"&email="+email+"&task=Add";
     oReq.open("post", address+"import_add.jsp", true, testing_login, testing_password);
@@ -59,36 +57,70 @@ var oReq = new XMLHttpRequest();
 function setAccess(EBPnumber, ids) {
     var xmlHttpRequest = new XMLHttpRequest();
     xmlHttpRequest.onreadystatechange = function () {
+
+
+
         if (xmlHttpRequest.readyState == 4) {
             console.log(ids.toString() + " have been included");
-            
-            
-            
-            
-            
-            
-            
-        }
+            var oReq = new XMLHttpRequest();
+            oReq.onload = getAddedProductsFromEBP(event, EBPnumber, email);
+            oReq.open("get", address + "edit_user.jsp?view=accesscontrolpv5&ebp_handle=" + EBPnumber, true, testing_login, testing_password);
+            oReq.setRequestHeader("Content-Type", "text/html; charset=ISO-8859-1");
+            oReq.send();
 
 
-    };
-    var accessGroupString = "";
-    ids.forEach(id => {accessGroupString = accessGroupString+"&accessGroupIDs="+id });
-    xmlHttpRequest.open("POST", address + "edit_user.jsp", true, testing_login, testing_password);
-    xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xmlHttpRequest.send("view=accesscontrolpv5&letter=D&ebp_handle=" + EBPnumber + accessGroupString + "&accessGroupIDInstructor=-1&date_begin=" + date_begin + "&date_end=" + date_end + "&task=Add+Access");
-    testing_action_pointer++;
+
+
+
+
+
+
+
+    }
+
+
+};
+var accessGroupString = "";
+ids.forEach(id => {accessGroupString = accessGroupString+"&accessGroupIDs="+id });
+xmlHttpRequest.open("POST", address + "edit_user.jsp", true, testing_login, testing_password);
+xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xmlHttpRequest.send("view=accesscontrolpv5&letter=D&ebp_handle=" + EBPnumber + accessGroupString + "&accessGroupIDInstructor=-1&date_begin=" + date_begin + "&date_end=" + date_end + "&task=Add+Access");
+testing_action_pointer++;
 }
 
 
-function writeNewAccountToGoogle(email)
+
+function getAddedProductsFromEBP(event, EBPnumber, email){
+
+    var arr = Array.from($.parseHTML(this.responseText)[12].querySelectorAll("table tr td:nth-child(2)"));
+    var products="|";
+    arr.splice(0,2);
+    arr.splice(arr.length-9,9);
+    arr.forEach(item => { products = products + item.textContent+"|"});
+    writeNewAccountToGoogle(email, products);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function writeNewAccountToGoogle(email, products)
 {
 
-var testing_sheetName = googleWriteData.sheetName;
-var testing_lastEmail = email;
-var testing_product = "TBD";
-var testing_googleWriteScriptURL = "https://script.google.com/macros/s/AKfycbyu8nDI8jGl3Y0C1RWEsXI3r_HcSZeJSye7nTjxDYUbefspfcS_/exec";
-var testing_str = 'sheetname=' + testing_sheetName + '&Email=' + encodeURIComponent(testing_lastEmail) + '&Product=' + testing_product;
+    var testing_sheetName = googleWriteData.sheetName;
+    var testing_lastEmail = email;
+    var testing_product = products;
+    var testing_googleWriteScriptURL = "https://script.google.com/macros/s/AKfycbyu8nDI8jGl3Y0C1RWEsXI3r_HcSZeJSye7nTjxDYUbefspfcS_/exec";
+    var testing_str = 'sheetname=' + testing_sheetName + '&Email=' + encodeURIComponent(testing_lastEmail) + '&Product=' + testing_product;
 
 
     $.ajax({
@@ -100,8 +132,8 @@ var testing_str = 'sheetname=' + testing_sheetName + '&Email=' + encodeURICompon
     });
 
 
-    
-    
+
+
 }
 
 
@@ -123,10 +155,10 @@ function createNewEmailBasedOnThePrevious(lastEmail)
 {
     var emailParts = lastEmail.split("+");
     var baseEmail = emailParts[0];
-    var emailAlias = emailParts[1]; 
+    var emailAlias = emailParts[1];
     var regex = /(\d+)/g;
     var lastEmailNumber = emailAlias.match(regex);
     var slicedEmail = emailAlias.split(lastEmailNumber);
     lastEmail = baseEmail+"+"+slicedEmail[0] + (Number(lastEmailNumber) + 1) + slicedEmail[1];
-return lastEmail;
+    return lastEmail;
 }

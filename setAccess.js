@@ -16,9 +16,7 @@ function init(settings) {
 }
 
 function doAfterEmailIsReceived(email) {
-    debugger;
     emailChangeed = createNewEmailBasedOnThePrevious(email);
-
     createNewUser(emailChangeed.replace("+", "%2B").replace("@", "%40"), "Anykey","Thompson");
 
 }

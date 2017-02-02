@@ -112,7 +112,7 @@ function writeNewAccountToGoogle(email, products, guid)
         data: testing_str,
         type: "POST"
     }).done(function () {
-        console.log("Account"+ email +" has been added to googlesheet");
+        console.log("Account "+ email +" has been added to googlesheet");
     });
 
 }

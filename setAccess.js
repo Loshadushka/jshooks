@@ -1,4 +1,5 @@
 function init(settings) {
+    testing_linkForAccess = setting.linkForAccess+'?u=';
     testing_googlePageId = settings.pageId;
     testing_googleSpreadsheetToken = settings.token;
     testing_login = settings.login;
@@ -102,7 +103,7 @@ function writeNewAccountToGoogle(email, products, guid)
     var testing_lastEmail = email;
     var testing_product = products;
     var testing_googleWriteScriptURL = "https://script.google.com/macros/s/AKfycbyu8nDI8jGl3Y0C1RWEsXI3r_HcSZeJSye7nTjxDYUbefspfcS_/exec";
-    var testing_str = 'sheetname=' + testing_sheetName + '&Email=' + encodeURIComponent(testing_lastEmail) + '&Product=' + testing_product +'&Guid=' + guid;
+    var testing_str = 'sheetname=' + testing_sheetName + '&Email=' + encodeURIComponent(testing_lastEmail) + '&Product=' + testing_product +'&Guid=' + guid + '&Link='testing_linkForAccess+guid;
 
 
     $.ajax({

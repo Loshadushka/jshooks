@@ -1,5 +1,5 @@
 function init(settings) {
-    testing_linkForAccess = setting.linkForAccess+'?u=';
+    testing_linkForAccess = settings.linkForAccess+'?u=';
     testing_googlePageId = settings.pageId;
     testing_googleSpreadsheetToken = settings.token;
     testing_login = settings.login;

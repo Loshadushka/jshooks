@@ -32,10 +32,10 @@ function testing_workingWithQuestion(question) {
     if (question.kind == "tbsResearch") {
         if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
 
-            if (document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([disabled])").length == 4) {
+            if (document.querySelectorAll("div.assessment_question[data-guid='" + question.guid + "']:not([style='display: none;']) input:not([disabled])").length == 4) {
 
 
-                document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([disabled])").forEach(function (item, index) {
+                document.querySelectorAll("div.assessment_question[data-guid='" + question.guid + "']:not([style='display: none;']) input:not([disabled])").forEach(function (item, index) {
 
                     item.value = question.correctAnswers[0][index];
                     $(".assessment_question[data-guid='" + question.guid + "'] input:not([disabled])").eq(index).keyup();

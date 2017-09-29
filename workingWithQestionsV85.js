@@ -68,17 +68,11 @@ function testing_workingWithQuestion(question) {
                     testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll(".infosheet_selector li").length;
                     document.querySelectorAll(".infosheet_selector li a")[answer].click();
                     document.querySelector("button.ok-button").click();
-
-
                 })
-
-
             }
             else {
-
-
                 for (var i = 0; i < question.correctAnswers.length; i++) {
-                    document.querySelectorAll(".assessment_question[data-guid='" + question.guid + "'] .textfield input")[i].value = question.correctAnswers[i];
+                    document.querySelectorAll(".assessment_question[data-guid='" + question.guid + "'] .textfield input")[i].value = Object.values(question.correctAnswers[i])[0];
                     $(".assessment_question[data-guid='" + question.guid + "'] .textfield input").eq(i).change();
                 }
             }

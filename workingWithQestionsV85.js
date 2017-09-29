@@ -115,7 +115,7 @@ function testing_workingWithQuestion(question) {
 
                 document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([style='border: none; background: lightgrey; color: black;']").forEach(function (item, index) {
 
-                    item.value = values(question.correctAnswers[index])[0];
+                    item.value = Object.values(question.correctAnswers[index])[0];
                     $(".assessment_question[data-guid='" + question.guid + "'] input").eq(index).change();
                 })
 

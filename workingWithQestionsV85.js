@@ -87,8 +87,7 @@ function testing_workingWithQuestion(question) {
 
             question.correctAnswers.forEach(function (item) {
 
-
-                document.querySelectorAll("div.assessment_question:not([style='display: none;']) input.truefalse +div")[item - 1].click();
+                document.querySelector("div.assessment_question:not([style='display: none;']) #"+item+" +div").click();
 
             })
 

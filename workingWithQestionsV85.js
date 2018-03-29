@@ -62,33 +62,7 @@ function testing_workingWithQuestion(question) {
 
         if (question.kind == "tbsGeneral" && question["sub-kind"].includes("spreadsheet")) {
 
-            if (question.kind == "tbsGeneral" && question["sub-kind"].includes("Mixed")) {
-
-                answerOnInfosheetSpreadsheetQuestions.apply(question);
-
-            } else {
-
-                if (document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([style='border: none; background: lightgrey; color: black;']").length > 0) {
-
-                    document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([style='border: none; background: lightgrey; color: black;']").forEach(function(item, index) {
-
-                        item.value = Object.values(question.correctAnswers[index])[0];
-                        $(".assessment_question[data-guid='" + question.guid + "'] input").eq(index).change();
-                    })
-
-                } else {
-
-                    testing_wholeProcessedAnswersCount = 0;
-                    document.querySelectorAll("div.assessment_question:not([style='display: none;']) .answer_box").forEach(function(item, index) {
-                        $(item).dblclick();
-                        var answer = question.correctAnswers[index] - testing_wholeProcessedAnswersCount;
-                        testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll(".infosheet_selector li").length;
-                        document.querySelectorAll(".infosheet_selector li a")[answer - 1].click();
-                        document.querySelector("button.ok-button").click();
-
-                    })
-                }
-            }
+            answerOnInfosheetSpreadsheetQuestions.apply(question);
 
         }
     }

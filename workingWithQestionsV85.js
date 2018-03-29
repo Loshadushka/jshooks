@@ -1,6 +1,6 @@
 function testing_workingWithQuestion(question) {
-    if (question.kind == "tbsDocumentReview") {
-        if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
+    if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
+        if (question.kind == "tbsDocumentReview") {
             testing_wholeProcessedAnswersCount = 0;
             testing_delay = 500;
             testing_questionPointer = 0;
@@ -25,10 +25,7 @@ function testing_workingWithQuestion(question) {
             }, testing_delay);
 
         }
-
-    }
-    if (question.kind == "tbsResearch") {
-        if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
+        if (question.kind == "tbsResearch") {
 
             if (document.querySelectorAll("div.assessment_question[data-guid='" + question.guid + "']:not([style='display: none;']) input:not([disabled])").length == 4) {
 
@@ -44,36 +41,16 @@ function testing_workingWithQuestion(question) {
                 document.querySelectorAll("div.assessment_question:not([style='display: none;']) input:not([disabled])")[1].value = question.correctAnswers[0][2];
                 $(".assessment_question[data-guid='" + question.guid + "'] input:not([disabled])").eq(0).keyup();
             }
+
         }
 
-    }
+        if (question.kind == "tbsGeneral" && question["sub-kind"] == "infosheet") {
 
-    if (question.kind == "tbsGeneral" && question["sub-kind"] == "infosheet") {
+            answerOnInfosheetSpreadsheetQuestions.apply(question);
 
-        if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
-
-            if (document.querySelectorAll("div.assessment_question:not([style='display: none;']) select.mcq").length > 0) {
-
-                testing_wholeProcessedAnswersCount = 0;
-                document.querySelectorAll("div.assessment_question:not([style='display: none;']) .answer_box").forEach(function(item, index) {
-                    $(item).dblclick();
-                    var answer = question.correctAnswers[index] - testing_wholeProcessedAnswersCount - 1;
-                    testing_wholeProcessedAnswersCount = testing_wholeProcessedAnswersCount + document.querySelectorAll(".infosheet_selector li").length;
-                    document.querySelectorAll(".infosheet_selector li a")[answer].click();
-                    document.querySelector("button.ok-button").click();
-                })
-            } else {
-                for (var i = 0; i < question.correctAnswers.length; i++) {
-                    document.querySelectorAll(".assessment_question[data-guid='" + question.guid + "'] .textfield input")[i].value = Object.values(question.correctAnswers[i])[0];
-                    $(".assessment_question[data-guid='" + question.guid + "'] .textfield input").eq(i).change();
-                }
-            }
         }
-    }
 
-    if (question.kind == "tbsGeneral" && question["sub-kind"] == "yesNo") {
-
-        if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
+        if (question.kind == "tbsGeneral" && question["sub-kind"] == "yesNo") {
 
             question.correctAnswers.forEach(function(item) {
 
@@ -83,30 +60,11 @@ function testing_workingWithQuestion(question) {
 
         }
 
-    }
-
-    if (question.kind == "tbsGeneral" && question["sub-kind"].includes("spreadsheet")) {
-
-        if (document.querySelector("div.assessment_question:not([style='display: none;'])").dataset.guid == question.guid) {
+        if (question.kind == "tbsGeneral" && question["sub-kind"].includes("spreadsheet")) {
 
             if (question.kind == "tbsGeneral" && question["sub-kind"].includes("Mixed")) {
 
-                question.correctAnswers.forEach(item=>{
-                    if (typeof item == "string") {
-
-                        $("#assessmentWidget div.assessment_question:not([style='display: none;']) select.mcq option[id='" + item + "']").parent().parent().click();
-                        $(".popup_entry_list input[value='" + item + "']").click();
-                        $(".action_accept").click();
-                    } else {
-                        $("#assessmentWidget div.assessment_question:not([style='display: none;']) .text_entry input[id='" + Object.keys(item)[0] + "']").parent().parent().click()
-                        $(".text_entry_input")[0].value = Object.values(item)[0];
-                        $(".text_entry_input").keyup();
-                        $(".action_accept").click();
-
-                    }
-
-                }
-                )
+                answerOnInfosheetSpreadsheetQuestions.apply(question);
 
             } else {
 
@@ -131,8 +89,28 @@ function testing_workingWithQuestion(question) {
                     })
                 }
             }
+
+        }
+    }
+}
+
+function answerOnInfosheetSpreadsheetQuestions() {
+
+    this.correctAnswers.forEach(item=>{
+        if (typeof item == "string") {
+
+            $("#assessmentWidget div.assessment_question:not([style='display: none;']) select.mcq option[id='" + item + "']").parent().parent().click();
+            $(".popup_entry_list input[value='" + item + "']").click();
+            $(".action_accept").click();
+        } else {
+            $("#assessmentWidget div.assessment_question:not([style='display: none;']) .text_entry input[id='" + Object.keys(item)[0] + "']").parent().parent().click()
+            $(".text_entry_input")[0].value = Object.values(item)[0];
+            $(".text_entry_input").keyup();
+            $(".action_accept").click();
+
         }
 
     }
+    )
 
 }
